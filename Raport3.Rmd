@@ -465,9 +465,23 @@ dane %>%
 
 ```{r 36, eval=FALSE}
 # miejsce na kod
-dane %>%
+#Wyciagnij kolumnę tags jako wektor wartosci
+tag_vector <- dane %>%
   filter(str_detect(Languages, 'Polish')) %>%
-  
+  select(Tags) %>%
+  pull()
+#W petli po kolei, kazdy wpis z kolumny tags rozdziel na wektor tagow 
+tag_summary <- c()
+for(tags_for_movie in tag_vector){
+  tag_summary <- c(tag_summary, unlist(strsplit(tags_for_movie, ',')))
+}
+
+#Wyciagnij ilosc powtarzania sie danych tagow, posortuj od najwiekszego w dół
+data.frame(tag_summary) %>% 
+  count(tag_summary, sort=TRUE)
+
+
+
   
 ```
 
